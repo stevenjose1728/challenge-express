@@ -1,11 +1,10 @@
 const boom = require('@hapi/boom');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const nodemailer = require('nodemailer');
-
 const { config } = require('./../config/config');
 const UserService = require('./user.service');
 const service = new UserService();
+const {ROLES} = require('../db/models/user.model')
 
 class AuthService {
 
@@ -22,18 +21,22 @@ class AuthService {
     return user;
   }
 
-  signToken(_user) {
-    let user = {... _user}
-    if(_user.password){
-      delete user.password
-    }
+  signToken({id, name, role, email}) {
     const payload = {
-      sub: user.id,
-      role: user.role
+      sub: id,
+      name: name
+    }
+    const response = {
+      id,
+      name,
+      email
+    }
+    if([ROLES.superadmin, ROLES.admin].includes(parseInt(role))){
+      response.isAdmin = true
     }
     const token = jwt.sign(payload, config.jwtSecret);
     return {
-      user,
+      user: response,
       token
     };
   }
