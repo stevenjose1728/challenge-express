@@ -1,8 +1,8 @@
 const boom = require('@hapi/boom');
 const bcrypt = require('bcrypt');
-
+const {ROLES} = require('../db/models/user.model');
 const { models } = require('./../libs/sequelize');
-
+const sequelize = require('sequelize');
 class UserService {
   constructor() {}
 
@@ -17,7 +17,13 @@ class UserService {
   }
 
   async find() {
-    const rta = await models.User.findAll();
+    const rta = await models.User.findAll({
+      where: {
+        role: {
+          [sequelize.Op.not]: ROLES.superadmin
+        }
+      }
+    });
     return rta;
   }
 
