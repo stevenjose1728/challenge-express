@@ -18,6 +18,9 @@ class UserService {
 
   async find() {
     const rta = await models.User.findAll({
+      attributes: {
+          exclude: ['password']
+      },
       where: {
         role: {
           [sequelize.Op.not]: ROLES.superadmin
