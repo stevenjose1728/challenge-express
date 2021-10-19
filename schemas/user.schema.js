@@ -16,9 +16,14 @@ const createUserSchema = Joi.object({
 const updateUserSchema = Joi.object({
   email: email.required(),
   password: password.required(),
+  id: Joi.number().required(),
   role: Joi.string().required(),
   name: Joi.string().required(),
-  password: Joi.string().optional(),
+  password: Joi.string().optional().allow(''),
+  createdAt: Joi.date().optional().allow(null),
+  deletedAt: Joi.date().optional().allow(null),
+  edit: Joi.boolean().optional(),
+  recoveryToken: [Joi.string().required(), Joi.allow(null)],
   password_confirmation: Joi.ref('password'),
 });
 
