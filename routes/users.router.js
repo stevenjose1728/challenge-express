@@ -78,7 +78,9 @@ router.patch('/:id',
         delete body.password
       }
       const category = await service.update(id, body);
-      res.json(category);
+      res.json({
+        message: 'User updated successfully'
+      });
     } catch (error) {
       next(error);
     }
