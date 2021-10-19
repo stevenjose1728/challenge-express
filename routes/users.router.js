@@ -1,7 +1,7 @@
 const express = require('express');
 const UserService = require('./../services/user.service');
 const validatorHandler = require('./../middlewares/validator.handler');
-const { updateUserSchema, createUserSchema, getUserSchema } = require('./../schemas/user.schema');
+const { adminUpdateUserSchema, updateUserSchema, createUserSchema, getUserSchema } = require('./../schemas/user.schema');
 const passport = require('passport');
 const router = express.Router();
 const bcrypt = require('bcrypt');
@@ -68,7 +68,7 @@ router.post('/',
 router.patch('/:id',
   passport.authenticate('jwt', {session: false}),
   validatorHandler(getUserSchema, 'params'),
-  validatorHandler(updateUserSchema, 'body'),
+  validatorHandler(adminUpdateUserSchema, 'body'),
   async (req, res, next) => {
     try {
       const { id } = req.params;
@@ -82,6 +82,35 @@ router.patch('/:id',
       await service.update(id, body);
       res.json({
         message: 'User updated successfully'
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.post('/profile',
+  passport.authenticate('jwt', {session: false}),
+  validatorHandler(updateUserSchema, 'body'),
+  async (req, res, next) => {
+    try {
+      const {sub: userId} = req.user
+      let body = req.body;
+      delete body.deletedAt
+      if(!req.body.password){
+        delete body.password
+      }else{
+        body.password = await bcrypt.hash(body.password, 10);
+      }
+      const {role, email, id, name} = await service.update(userId, body);
+      res.json({
+        message: 'User updated successfully',
+        user: {
+          role: parseInt(role),
+          email,
+          id,
+          name
+        }
       });
     } catch (error) {
       next(error);

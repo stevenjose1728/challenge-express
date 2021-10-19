@@ -13,7 +13,7 @@ const createUserSchema = Joi.object({
   password_confirmation: Joi.ref('password'),
 });
 
-const updateUserSchema = Joi.object({
+const adminUpdateUserSchema = Joi.object({
   email: email.required(),
   password: password.required(),
   id: Joi.number().required(),
@@ -27,8 +27,21 @@ const updateUserSchema = Joi.object({
   password_confirmation: Joi.ref('password'),
 });
 
+const updateUserSchema = Joi.object({
+  email: email.required(),
+  password: password.required(),
+  id: Joi.number().required(),
+  name: Joi.string().required(),
+  password: Joi.string().optional().allow(''),
+  createdAt: Joi.date().optional().allow(null),
+  deletedAt: Joi.date().optional().allow(null),
+  edit: Joi.boolean().optional(),
+  recoveryToken: [Joi.string().required(), Joi.allow(null)],
+  password_confirmation: Joi.ref('password'),
+});
+
 const getUserSchema = Joi.object({
   id: id.required(),
 });
 
-module.exports = { createUserSchema, updateUserSchema, getUserSchema }
+module.exports = { createUserSchema, updateUserSchema, getUserSchema, adminUpdateUserSchema }
