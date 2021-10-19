@@ -24,7 +24,8 @@ class AuthService {
   signToken({id, name, role, email}) {
     const payload = {
       sub: id,
-      name: name
+      name,
+      role
     }
     const response = {
       id,
