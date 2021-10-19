@@ -14,7 +14,7 @@ function checkApiKey(req, res, next) {
 
 function checkAdminRole(req, res, next) {
   const user = req.user;
-  if ([ROLES.superadmin, ROLES.admin].includes(user.role)) {
+  if([ROLES.superadmin, ROLES.admin].includes(parseInt(user.role))){
     next();
   } else {
     next(boom.unauthorized());
