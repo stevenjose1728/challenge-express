@@ -76,8 +76,10 @@ router.patch('/:id',
       delete body.deletedAt
       if(!req.body.password){
         delete body.password
+      }else{
+        body.password = await bcrypt.hash(body.password, 10);
       }
-      const category = await service.update(id, body);
+      await service.update(id, body);
       res.json({
         message: 'User updated successfully'
       });
