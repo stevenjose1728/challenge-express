@@ -72,7 +72,11 @@ router.patch('/:id',
   async (req, res, next) => {
     try {
       const { id } = req.params;
-      const body = req.body;
+      let body = req.body;
+      delete body.deletedAt
+      if(!req.body.password){
+        delete body.password
+      }
       const category = await service.update(id, body);
       res.json(category);
     } catch (error) {
