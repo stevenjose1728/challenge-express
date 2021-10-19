@@ -2,7 +2,7 @@ const boom = require('@hapi/boom');
 const bcrypt = require('bcrypt');
 const {ROLES} = require('../db/models/user.model');
 const { models } = require('./../libs/sequelize');
-const sequelize = require('sequelize');
+const {Sequelize, Op} = require('sequelize');
 class UserService {
   constructor() {}
 
@@ -23,8 +23,9 @@ class UserService {
       },
       where: {
         role: {
-          [sequelize.Op.not]: ROLES.superadmin
-        }
+          [Op.not]: ROLES.superadmin
+        },
+        deletedAt: null
       }
     });
     return rta;
@@ -52,8 +53,16 @@ class UserService {
   }
 
   async delete(id) {
-    const user = await this.findOne(id);
-    await user.destroy();
+    const user = await models.User.update(
+      {
+        deletedAt: Sequelize.NOW,
+      },
+      {
+        where: {
+          id
+        }
+      }
+    );
     return { id };
   }
 }

@@ -94,7 +94,9 @@ router.delete('/:id',
     try {
       const { id } = req.params;
       await service.delete(id);
-      res.status(201).json({id});
+      res.status(201).json({
+        msg: 'User was been deleted successfully'
+      });
     } catch (error) {
       next(error);
     }
