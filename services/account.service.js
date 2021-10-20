@@ -17,6 +17,12 @@ class AccountService {
     });
     return rta;
   }
+  async create(data) {
+    const account = await models.Account.create({
+      ...data,
+    });
+    return account;
+  }
 }
 
 module.exports = AccountService;
