@@ -24,7 +24,10 @@ const UserSchema = {
   },
   password: {
     allowNull: false,
-    type: DataTypes.STRING
+    type: DataTypes.STRING,
+    get() {
+      return undefined;
+    }
   },
   recoveryToken: {
     field: 'recovery_token',
@@ -51,10 +54,10 @@ const UserSchema = {
 
 class User extends Model {
   static associate(models) {
-    // this.hasOne(models.Customer, {
-    //   as: 'customer',
-    //   foreignKey: 'userId'
-    // });
+    this.hasMany(models.Account, {
+      as: 'accounts',
+      foreignKey: 'userId'
+    });
   }
 
   static config(sequelize) {
