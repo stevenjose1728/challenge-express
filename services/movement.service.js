@@ -26,13 +26,18 @@ class MovementService {
 
   async update(id, data) {
     const item = await models.Movement.findByPk(id);
+    const type = (item.teamId !== data.teamId || item.userId !== data.userId) ? LOGS.moved : LOGS.edit
+    const log = await models.Log.create({
+      type,
+      movementId: item.id
+    })
     const rta = await item.update(data);
     return rta;
   }
 
   async delete(id) {
     const deletedAt = moment().format('YYYY-MM-DD HH:mm:ss');
-    const account = await models.Movement.update(
+    const item = await models.Movement.update(
       {
         deletedAt
       },
@@ -42,7 +47,11 @@ class MovementService {
         }
       }
     );
-    return account;
+    const log = await models.Log.create({
+      type: LOGS.delete,
+      movementId: id
+    })
+    return item;
   }
 }
 
