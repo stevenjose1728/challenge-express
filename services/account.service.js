@@ -1,8 +1,5 @@
-const boom = require('@hapi/boom');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const { config } = require('./../config/config');
 const { models } = require('./../libs/sequelize');
+const {Sequelize} = require('sequelize')
 class AccountService {
 
   async get() {
@@ -28,6 +25,20 @@ class AccountService {
     const account = await models.Account.findByPk(id);
     const rta = await account.update(data);
     return rta;
+  }
+
+  async delete(id) {
+    const account = await models.Account.update(
+      {
+        deletedAt: Sequelize.NOW,
+      },
+      {
+        where: {
+          id
+        }
+      }
+    );
+    return account;
   }
 }
 
