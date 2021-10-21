@@ -1,5 +1,6 @@
 'use strict';
 
+const { TEAM_TABLE } = require("../models/team.model");
 const { USER_TABLE } = require("../models/user.model");
 
 module.exports = {
@@ -16,6 +17,16 @@ module.exports = {
         field: 'user_id',
         references: {
           model: USER_TABLE,
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL'
+      },
+      teamId: {
+        type: Sequelize.INTEGER,
+        field: 'team_id',
+        references: {
+          model: TEAM_TABLE,
           key: 'id'
         },
         onUpdate: 'CASCADE',
