@@ -56,7 +56,8 @@ const MovementSchema = {
 
 class Movement extends Model {
   static associate(models) {
-
+    this.belongsTo(models.User, { as: 'user' });
+    this.belongsTo(models.Team, { as: 'team' });
   }
 
   static config(sequelize) {

@@ -4,6 +4,7 @@ class MovementService {
 
   async get() {
     const rta = await models.Movement.findAll({
+      include: ['user', 'team'],
       where: {
         deletedAt: null
       },
