@@ -29,7 +29,7 @@ const TeamSchema = {
   },
 }
 
-class Account extends Model {
+class Team extends Model {
   static associate(models) {
 
   }
@@ -38,11 +38,11 @@ class Account extends Model {
     return {
       sequelize,
       tableName: TEAM_TABLE,
-      modelName: 'Teams',
+      modelName: 'Team',
       timestamps: false
     }
   }
 }
 
 
-module.exports = { TEAM_TABLE, TeamSchema, Account }
+module.exports = { TEAM_TABLE, TeamSchema, Team }
