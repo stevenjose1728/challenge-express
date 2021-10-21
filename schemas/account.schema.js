@@ -10,7 +10,7 @@ const createAccountSchema = Joi.object({
   userId: Joi.number().required()
 });
 
-const updateUserSchema = Joi.object({
+const updateAccountSchema = Joi.object({
   createdAt: Joi.optional(),
   deletedAt: Joi.optional().allow(null),
   name: Joi.string().required(),
@@ -21,7 +21,12 @@ const updateUserSchema = Joi.object({
   userId: Joi.number().required()
 });
 
+const deleteAccountSchema = Joi.object({
+  id: Joi.number().required(),
+});
+
 module.exports = {
   createAccountSchema,
-  updateUserSchema
+  updateAccountSchema,
+  deleteAccountSchema
 }
