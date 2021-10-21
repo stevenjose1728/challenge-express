@@ -4,7 +4,8 @@ const LOGS_TABLE = 'logs';
 const LOGS = {
   create: 'create',
   edit: 'edit',
-  moved: 'moved'
+  moved: 'moved',
+  delete: 'deleted'
 }
 const LogSchema = {
   id: {
