@@ -3,7 +3,7 @@ const passport = require('passport');
 const { checkAdminRole } = require('../middlewares/auth.handler');
 const validatorHandler = require('../middlewares/validator.handler');
 const AccountService = require('./../services/account.service');
-const {createAccountSchema, updateUserSchema} = require('../schemas/account.schema');
+const {createAccountSchema, updateAccountSchema, deleteAccountSchema} = require('../schemas/account.schema');
 const router = express.Router();
 const service = new AccountService();
 
@@ -26,6 +26,10 @@ router.post('/',
   checkAdminRole,
   async (req, res, next) => {
     try {
+      let params = req.body
+      delete params.createdAt
+      delete params.updatedAt
+      delete params.deletedAt
       await service.create(req.body)
       res.json({
         message: 'Account created successfully'
@@ -38,13 +42,32 @@ router.post('/',
 
 router.patch('/',
   passport.authenticate('jwt', {session: false}),
-  validatorHandler(updateUserSchema, 'body'),
+  validatorHandler(updateAccountSchema, 'body'),
   checkAdminRole,
   async (req, res, next) => {
     try {
+      let params = req.body
+      delete params.deletedAt
       await service.update(req.body.id, req.body)
       res.json({
         message: 'Account updated successfully'
+      })
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.delete('/:id',
+  passport.authenticate('jwt', {session: false}),
+  validatorHandler(deleteAccountSchema, 'params'),
+  checkAdminRole,
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      await service.delete(id)
+      res.json({
+        message: 'Account deleted successfully'
       })
     } catch (error) {
       next(error);
