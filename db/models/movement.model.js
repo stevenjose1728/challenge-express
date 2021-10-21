@@ -1,4 +1,5 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
+const { TEAM_TABLE } = require('./team.model');
 const { USER_TABLE } = require('./user.model');
 const MOVEMENT_TABLE = 'movements';
 const MovementSchema = {
@@ -13,6 +14,16 @@ const MovementSchema = {
     field: 'user_id',
     references: {
       model: USER_TABLE,
+      key: 'id'
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL'
+  },
+  teamId: {
+    type: Sequelize.INTEGER,
+    field: 'team_id',
+    references: {
+      model: TEAM_TABLE,
       key: 'id'
     },
     onUpdate: 'CASCADE',
