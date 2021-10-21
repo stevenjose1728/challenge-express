@@ -39,17 +39,19 @@ const AccountSchema = {
   createdAt: {
     allowNull: true,
     field: 'created_at',
-    type: Sequelize.DATE
+    type: DataTypes.DATE,
+    defaultValue: Sequelize.NOW,
   },
   updatedAt: {
     allowNull: true,
     field: 'updated_at',
-    type: Sequelize.DATE
+    type: DataTypes.DATE,
+    defaultValue: Sequelize.NOW,
   },
   deletedAt: {
     allowNull: true,
     field: 'deleted_at',
-    type: Sequelize.DATE
+    type: DataTypes.DATE,
   }
 }
 

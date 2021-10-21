@@ -42,17 +42,19 @@ module.exports = {
       createdAt: {
         allowNull: true,
         field: 'created_at',
-        type: Sequelize.DATE
+        type: Sequelize.DataTypes.DATE,
+        defaultValue: Sequelize.NOW,
       },
       updatedAt: {
         allowNull: true,
         field: 'updated_at',
-        type: Sequelize.DATE
+        type: Sequelize.DataTypes.DATE,
+        defaultValue: Sequelize.NOW,
       },
       deletedAt: {
         allowNull: true,
         field: 'deleted_at',
-        type: Sequelize.DATE
+        type: Sequelize.DataTypes.DATE,
       }
     });
   },
