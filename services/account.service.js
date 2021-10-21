@@ -23,6 +23,12 @@ class AccountService {
     });
     return account;
   }
+
+  async update(id, data) {
+    const account = await models.Account.findByPk(id);
+    const rta = await account.update(data);
+    return rta;
+  }
 }
 
 module.exports = AccountService;
