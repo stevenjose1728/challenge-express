@@ -1,5 +1,6 @@
 const { models } = require('./../libs/sequelize');
 const moment = require('moment');
+const { LOGS } = require('../db/models/logs.model');
 class MovementService {
 
   async get() {
@@ -16,6 +17,10 @@ class MovementService {
     const item = await models.Movement.create({
       ...data,
     });
+    const log = await models.Log.create({
+      type: LOGS.create,
+      movementId: item.id
+    })
     return item;
   }
 

@@ -1,6 +1,11 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
 const { MOVEMENT_TABLE } = require('./movement.model');
 const LOGS_TABLE = 'logs';
+const LOGS = {
+  create: 'create',
+  edit: 'edit',
+  moved: 'moved'
+}
 const LogSchema = {
   id: {
     allowNull: false,
@@ -56,4 +61,4 @@ class Log extends Model {
 }
 
 
-module.exports = { LOGS_TABLE, LogSchema, Log }
+module.exports = { LOGS_TABLE, LogSchema, Log, LOGS }
