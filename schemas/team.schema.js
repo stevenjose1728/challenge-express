@@ -1,10 +1,7 @@
 const Joi = require('joi');
 
 const createSchema = Joi.object({
-  createdAt: Joi.optional(),
-  deletedAt: Joi.optional().allow(null),
   name: Joi.string().required(),
-  updatedAt: Joi.optional()
 });
 
 const updateSchema = Joi.object({

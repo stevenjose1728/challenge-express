@@ -32,7 +32,7 @@ router.post('/',
       delete params.deletedAt
       await service.create(req.body)
       res.json({
-        message: 'Account created successfully'
+        message: 'Team created successfully'
       })
     } catch (error) {
       next(error);
@@ -50,7 +50,7 @@ router.patch('/',
       delete params.deletedAt
       await service.update(req.body.id, req.body)
       res.json({
-        message: 'Account updated successfully'
+        message: 'Team updated successfully'
       })
     } catch (error) {
       next(error);
@@ -67,7 +67,7 @@ router.delete('/:id',
       const { id } = req.params;
       await service.delete(id)
       res.json({
-        message: 'Account deleted successfully'
+        message: 'Team deleted successfully'
       })
     } catch (error) {
       next(error);
