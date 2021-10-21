@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const {ROLES} = require('../db/models/user.model');
 const { models } = require('./../libs/sequelize');
 const {Sequelize, Op} = require('sequelize');
+const moment = require('moment');
 class UserService {
   constructor() {}
 
@@ -53,9 +54,10 @@ class UserService {
   }
 
   async delete(id) {
+    const deletedAt = moment().format('YYYY-MM-DD HH:mm:ss');
     const user = await models.User.update(
       {
-        deletedAt: Sequelize.NOW,
+        deletedAt
       },
       {
         where: {

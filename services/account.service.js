@@ -1,5 +1,5 @@
 const { models } = require('./../libs/sequelize');
-const {Sequelize} = require('sequelize')
+const moment = require('moment');
 class AccountService {
 
   async get() {
@@ -28,9 +28,10 @@ class AccountService {
   }
 
   async delete(id) {
+    const deletedAt = moment().format('YYYY-MM-DD HH:mm:ss');
     const account = await models.Account.update(
       {
-        deletedAt: Sequelize.NOW,
+        deletedAt
       },
       {
         where: {
