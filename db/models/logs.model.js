@@ -15,7 +15,25 @@ const LogSchema = {
     type: Sequelize.INTEGER
   },
   type: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    get(){
+      const value = this.getDataValue('type');
+
+      switch (value) {
+        case LOGS.edit:
+          return 'Se editó'
+          break;
+        case LOGS.delete:
+          return 'Se eliminó'
+          break;
+        case LOGS.moved:
+          return 'Se movió'
+          break;
+        default:
+          return 'Se creó'
+          break;
+      }
+    }
   },
   movementId: {
     type: Sequelize.INTEGER,
@@ -48,7 +66,7 @@ const LogSchema = {
 
 class Log extends Model {
   static associate(models) {
-
+    this.belongsTo(models.Movement, { as: 'movement' });
   }
 
   static config(sequelize) {
